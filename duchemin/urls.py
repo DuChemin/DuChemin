@@ -6,6 +6,9 @@ from duchemin.views.phrase import PhraseList, PhraseDetail
 from duchemin.views.comment import CommentList, CommentDetail
 from duchemin.views.note import NoteList, NoteDetail
 from duchemin.views.user import UserList, UserDetail
+from duchemin.views.piece import PieceList, PieceDetail, PieceDiscussionDetail
+from duchemin.views.book import BookList, BookDetail
+from duchemin.views.reconstruction import ReconstructionList, ReconstructionDetail
 from duchemin.views.auth import SessionAuth, SessionStatus, SessionClose
 
 # Uncomment the next two lines to enable the admin:
@@ -27,20 +30,23 @@ if 'django.contrib.admin' in settings.INSTALLED_APPS:
         url(r'^auth/status/$', SessionStatus.as_view()),
         url(r'^auth/logout/$', SessionClose.as_view()),
         url(r'^piece/(?P<piece_id>[0-9a-zA-Z]+)/add-observation/$', 'add_observation'),
-        url(r'^piece/(?P<piece_id>[0-9a-zA-Z]+)/discussion/$', 'discussion'),
-        url(r'^piece/(?P<pk>[0-9a-zA-Z]+)/$', 'piece', name="dcpiece-detail"),
-        url(r'^pieces/$', 'pieces', name="dcpiece-list"),
+        url(r'^piece/(?P<piece_id>[0-9a-zA-Z]+)/discussion/$', PieceDiscussionDetail.as_view(), name="dcpiece-discussion-detail"),
+        url(r'^pieces/$', PieceList.as_view(), name="dcpiece-list"),
+        url(r'^piece/(?P<piece_id>[0-9a-zA-Z]+)/$', PieceDetail.as_view(), name="dcpiece-detail"),
 
-        url(r'^book/(?P<pk>[0-9]+)/$', 'book', name="dcbook-detail"),
-        url(r'^books/$', 'books', name="dcbook-list"),
+        # url(r'^piece/(?P<pk>[0-9a-zA-Z]+)/$', 'piece', name="dcpiece-detail"),
+        # url(r'^pieces/$', 'pieces', name="dcpiece-list"),
+
+        url(r'^book/(?P<book_id>[0-9]+)/$', BookDetail.as_view(), name="dcbook-detail"),
+        url(r'^books/$', BookList.as_view(), name="dcbook-list"),
 
         url(r'^profile/', 'profile'),
 
-        url(r'^reconstructions/$', 'reconstructions'),
-        url(r'^reconstruction/(?P<reconstruction_id>[0-9]+)/$', 'reconstruction'),
+        url(r'^reconstructions/$', ReconstructionList.as_view(), name="dcreconstruction-list"),
+        url(r'^reconstruction/(?P<pk>[0-9]+)/$', ReconstructionDetail.as_view(), name="dcreconstruction-detail"),
 
         url(r'^people/$', PersonList.as_view(), name="dcperson-list"),
-        url(r'^person/(?P<pk>[a-zA-Z0-9]+)/$', PersonDetail.as_view(), name="dcperson-detail"),
+        url(r'^person/(?P<person_id>[a-zA-Z0-9]+)/$', PersonDetail.as_view(), name="dcperson-detail"),
 
         url(r'^analyses/$', AnalysisList.as_view(), name="dcanalysis-list"),
         url(r'^analysis/(?P<pk>[0-9]+)/$', AnalysisDetail.as_view(), name="dcanalysis-detail"),
