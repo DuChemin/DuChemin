@@ -7,9 +7,12 @@ from rest_framework import serializers
 
 
 class DCPersonCommentSerializer(serializers.HyperlinkedModelSerializer):
+    full_name = serializers.Field('full_name')
+
     class Meta:
         model = DCPerson
-        fields = ('person_id',)
+        lookup_field = "person_id"
+        fields = ('url', 'person_id', 'full_name')
 
 
 class DCUserProfileCommentSerializer(serializers.HyperlinkedModelSerializer):
@@ -25,13 +28,14 @@ class DCUserCommentSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'profile',)
+        fields = ('profile', 'username')
 
 
 class DCPieceCommentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = DCPiece
-        fields = ('piece_id',)
+        lookup_field = 'piece_id'
+        fields = ('url', 'piece_id', 'title')
 
 
 class DCCommentSerializer(serializers.HyperlinkedModelSerializer):

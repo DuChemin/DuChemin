@@ -14,6 +14,6 @@ class DCPhraseSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = DCPhrase
-        ('url', 'piece_id', 'phrase_num', 'text',
-         'phrase_start', 'phrase_stop',
-         'phrase_text', 'rhyme',)
+        fields = ('url', 'piece_id', 'phrase_num', 'text',
+                  'phrase_start', 'phrase_stop',
+                  'phrase_text', 'rhyme',)
