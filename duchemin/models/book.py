@@ -6,6 +6,7 @@ from django.db.models.signals import post_save, post_delete
 class DCBook(models.Model):
     class Meta:
         app_label = "duchemin"
+        ordering = ["id"]
         verbose_name = "Book"
         verbose_name_plural = "Books"
 

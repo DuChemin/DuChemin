@@ -3,6 +3,11 @@ from django.contrib.auth.models import User
 
 
 class DCComment(models.Model):
+    class Meta:
+        app_label = "duchemin"
+        verbose_name = "Comment"
+        verbose_name_plural = "Comments"
+
     piece = models.ForeignKey("duchemin.DCPiece", related_name="comments")
     author = models.ForeignKey(User, related_name="comments")
 
@@ -13,8 +18,3 @@ class DCComment(models.Model):
 
     def __unicode__(self):
         return u"{0} ({1} {2})".format(self.piece, self.author, self.created)
-
-    class Meta:
-        app_label = "duchemin"
-        verbose_name = "Comment"
-        verbose_name_plural = "Comments"

@@ -2,21 +2,18 @@ from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save, post_delete
 
-from duchemin.models.person import DCPerson
-from duchemin.models.piece import DCPiece
-from duchemin.models.phrase import DCPhrase
-
 
 class DCAnalysis(models.Model):
     class Meta:
         app_label = "duchemin"
         verbose_name = "Observation"
         verbose_name_plural = "Observations"
+        ordering = ['phrase_number__phrase_num', 'start_measure']
 
     timestamp = models.CharField(max_length=64, blank=True, null=True)
-    analyst = models.ForeignKey(DCPerson, to_field='person_id', db_index=True, related_name="analyses")
-    composition_number = models.ForeignKey(DCPiece, to_field='piece_id', db_index=True, related_name="pieces")
-    phrase_number = models.ForeignKey(DCPhrase, to_field='phrase_id', db_index=True, related_name="phrases")
+    analyst = models.ForeignKey("duchemin.DCPerson", to_field='person_id', db_index=True, related_name="analyses")
+    composition_number = models.ForeignKey("duchemin.DCPiece", to_field='piece_id', db_index=True, related_name="analyses")
+    phrase_number = models.ForeignKey("duchemin.DCPhrase", to_field='phrase_id', db_index=True, related_name="analyses")
     start_measure = models.IntegerField(blank=True, null=True)
     stop_measure = models.IntegerField(blank=True, null=True)
     is_cadence = models.BooleanField()
