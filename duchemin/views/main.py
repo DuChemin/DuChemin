@@ -84,66 +84,66 @@ def pieces(request):
     return render(request, 'main/pieces.html', {'pieces': all_pieces, 'is_logged_in': is_logged_in})
 
 
-def piece(request, pk):
-    def format_pk(string):
-        """Format piece_id with last character, if a letter, lowercase,
-        and all other letters uppercase.
+# def piece(request, pk):
+#     def format_pk(string):
+#         """Format piece_id with last character, if a letter, lowercase,
+#         and all other letters uppercase.
 
-        >>> format_pk('dc0101')
-        'DC0101'
+#         >>> format_pk('dc0101')
+#         'DC0101'
 
-        >>> format_pk('DC1203B')
-        'DC1203b'
+#         >>> format_pk('DC1203B')
+#         'DC1203b'
 
-        """
-        if len(string) < 2:
-            return string
-        else:
-            return string[:-1].upper() + string[-1:].lower()
+#         """
+#         if len(string) < 2:
+#             return string
+#         else:
+#             return string[:-1].upper() + string[-1:].lower()
 
-    # note: this is not the *actual* pk, it's the piece_id.
-    # This field name just makes REST Framework happy.
+#     # note: this is not the *actual* pk, it's the piece_id.
+#     # This field name just makes REST Framework happy.
 
-    # Redirect to url with uppercase letters
-    # (except for possible last letter, which is lowercase)
-    try:
-        if pk != format_pk(pk):
-            return HttpResponseRedirect("/piece/{0}/".format(format_pk(pk)))
-        try:
-            piece = DCPiece.objects.get(piece_id=pk)
-        except DCPiece.DoesNotExist:
-            raise Http404
-    except IndexError:
-        pass
+#     # Redirect to url with uppercase letters
+#     # (except for possible last letter, which is lowercase)
+#     try:
+#         if pk != format_pk(pk):
+#             return HttpResponseRedirect("/piece/{0}/".format(format_pk(pk)))
+#         try:
+#             piece = DCPiece.objects.get(piece_id=pk)
+#         except DCPiece.DoesNotExist:
+#             raise Http404
+#     except IndexError:
+#         pass
 
-    is_favourite = False
-    is_logged_in = False
-    is_staff = False
-    if request.user.is_authenticated():
-        is_logged_in = True
-        is_staff = request.user.is_staff
-        profile = request.user.profile
-        if profile.favourited_piece.filter(id=piece.id):
-            is_favourite = True
+#     is_favourite = False
+#     is_logged_in = False
+#     is_staff = False
+#     if request.user.is_authenticated():
+#         is_logged_in = True
+#         is_staff = request.user.is_staff
+#         profile = request.user.profile
+#         if profile.favourited_piece.filter(id=piece.id):
+#             is_favourite = True
 
-    phrases = DCPhrase.objects.filter(piece_id=pk).order_by('phrase_num')
+#     phrases = DCPhrase.objects.filter(piece_id=pk).order_by('phrase_num')
 
-    analyses = DCAnalysis.objects.filter(composition_number=pk).order_by('phrase_number__phrase_num', 'start_measure')
-    reconstructions = DCReconstruction.objects.filter(piece=pk).order_by('piece')
-    comments = DCComment.objects.filter(piece=piece).order_by('created')
+#     analyses = DCAnalysis.objects.filter(composition_number=pk).order_by('phrase_number__phrase_num', 'start_measure')
+#     reconstructions = DCReconstruction.objects.filter(piece=pk).order_by('piece')
+#     comments = DCComment.objects.filter(piece=piece).order_by('created')
 
-    data = {
-        'piece': piece,
-        'piece_id' : pk,
-        'phrases': phrases,
-        'analyses': analyses,
-        'reconstructions': reconstructions,
-        'comments': comments,
-        'is_favourite': is_favourite,
-        'is_logged_in': is_logged_in,
-        'is_staff': is_staff
-    }
-    return render(request, 'main/piece.html', data, context_instance=RequestContext(request))
+#     data = {
+#         'piece': piece,
+#         'piece_id': pk,
+#         'phrases': phrases,
+#         'analyses': analyses,
+#         'reconstructions': reconstructions,
+#         'comments': comments,
+#         'is_favourite': is_favourite,
+#         'is_logged_in': is_logged_in,
+#         'is_staff': is_staff
+#     }
+#     return render(request, 'main/piece.html', data, context_instance=RequestContext(request))
 
 
 def discussion(request, piece_id):
@@ -170,7 +170,7 @@ def discussion(request, piece_id):
     data = {
         'user': request.user,
         'piece': piece,
-        'piece_id' : piece_id,
+        'piece_id': piece_id,
         'is_favourite': is_favourite,
         'is_logged_in': is_logged_in,
         'is_staff': is_staff,

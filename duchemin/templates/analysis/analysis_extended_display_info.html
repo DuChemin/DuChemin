@@ -4,30 +4,28 @@
         <dt>Analysis ID</dt>
         <dd>{{ analysis.id }}</dd>
 
-        {% if analysis.analyst %}
         <dt>Analyst</dt>
-        <dd>{{ analysis.analyst }}</dd>
-        {% endif %}
+        <dd>{{ analysis.analyst.full_name }}</dd>
 
-        {% if analysis.composition_number.book_id.title %}
+<!--         {% if analysis.composition_number.book_id.title %}
         <dt>Book Title</dt>
         <dd><a href="/book/{{ analysis.composition_number.book_id.book_id }}">{{ analysis.composition_number.book_id.title }}</a></dd>
         {% endif %}
-
-        {% if analysis.composition_number.composer %}
+ -->
+<!--         {% if analysis.composition_number.composer %}
         <dt>Composer</dt>
         <dd><a href="/person/{{ analysis.composition_number.composer.person_id }}">{{ analysis.composition_number.composer }}</a></dd>
         {% endif %}
-
+ -->
         <dt>Is Cadence?</dt>
-        {% if analysis.cadence == "Yes" or analysis.cadence == "True" %}
+        {% if analysis.is_cadence == True %}
         <dd>Yes</dd>
         {% else %}
         <dd>No</dd>
         {% endif %}
 
         {# Cadence Info #}
-        {% if analysis.cadence == "Yes" or analysis.cadence == "True"  %}
+        {% if analysis.is_cadence == True  %}
         <dt>Cadence Kind</dt>
         <dd>{{ analysis.cadence_kind }}</dd>
 

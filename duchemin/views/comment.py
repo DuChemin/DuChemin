@@ -1,4 +1,3 @@
-import urlparse
 from rest_framework import generics
 from rest_framework.renderers import JSONRenderer
 from rest_framework import permissions
@@ -6,35 +5,37 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from django.contrib.auth.models import User
-from django.core.urlresolvers import resolve
 from django.shortcuts import get_object_or_404
 
 from duchemin.models.comment import DCComment
 from duchemin.models.piece import DCPiece
 from duchemin.serializers.comment import DCCommentSerializer
+from duchemin.renderers.custom_html_renderer import CustomHTMLRenderer
 
 
 # Don't save comments that are essentially empty.
 EMPTY_COMMENTS = ['Type a comment here', '', ' ']
 
+
 # These will stick around, but if we're only using this for JSON serialization
 # we won't need HTML templates.
 # from duchemin.renderers.custom_html_renderer import CustomHTMLRenderer
-# class CommentListHTMLRenderer(CustomHTMLRenderer):
-#     template_name = "comment/comment_list.html"
+class CommentListHTMLRenderer(CustomHTMLRenderer):
+    template_name = "comment/comment_list.html"
 
 
-# class CommentDetailHTMLRenderer(CustomHTMLRenderer):
-#     template_name = "comment/comment_detail.html"
+class PieceCommentDetailHTMLRenderer(CustomHTMLRenderer):
+    template_name = "piece/piece_discussion.html"
+
 
 class CommentList(generics.ListCreateAPIView):
     model = DCComment
     serializer_class = DCCommentSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    renderer_classes = (JSONRenderer,)
-    paginate_by = 100
+    renderer_classes = (JSONRenderer, CommentListHTMLRenderer)
+    paginate_by = 10
     paginate_by_param = 'page_size'
-    max_paginate_by = 200
+    max_paginate_by = 10
 
     def get_queryset(self):
         piece = self.request.QUERY_PARAMS.get('piece')
@@ -52,20 +53,19 @@ class CommentList(generics.ListCreateAPIView):
 
         piece_obj = get_object_or_404(DCPiece, piece_id=piece_id)
 
-        if comment_text not in EMPTY_COMMENTS:
-            current_user = User.objects.get(pk=request.user.id)
-            comment = DCComment()
-            comment.piece = piece_obj
-            comment.author = current_user
-            comment.text = comment_text
-            comment.save()
+        if comment_text in EMPTY_COMMENTS:
+            return Response({"message": "Empty Comments are not allowed."}, status=status.HTTP_400_BAD_REQUEST)
 
-            serialized = DCCommentSerializer(comment).data
+        current_user = User.objects.get(pk=request.user.id)
+        comment = DCComment()
+        comment.piece = piece_obj
+        comment.author = current_user
+        comment.text = comment_text
+        comment.save()
 
-            return Response(serialized, status=status.HTTP_201_CREATED)
+        serialized = DCCommentSerializer(comment).data
 
-        else:
-            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serialized, status=status.HTTP_201_CREATED)
 
 
 class CommentDetail(generics.RetrieveUpdateDestroyAPIView):

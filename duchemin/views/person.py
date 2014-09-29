@@ -30,17 +30,18 @@ class PersonDetail(generics.RetrieveAPIView):
     model = DCPerson
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     serializer_class = DCPersonDetailSerializer
+    lookup_field = "person_id"
     renderer_classes = (JSONRenderer, PersonDetailHTMLRenderer)
 
-    def get_object(self):
-        url_arg = self.kwargs['pk']
-        person = DCPerson.objects.filter(person_id=url_arg)
-        if not person.exists():
-            person = DCPerson.objects.filter(surname__iexact=url_arg)
+    # def get_object(self):
+    #     url_arg = self.kwargs['pk']
+    #     person = DCPerson.objects.filter(person_id=url_arg)
+    #     if not person.exists():
+    #         person = DCPerson.objects.filter(surname__iexact=url_arg)
 
-        obj = get_object_or_404(person)
-        self.check_object_permissions(self.request, obj)
-        return obj
+    #     obj = get_object_or_404(person)
+    #     self.check_object_permissions(self.request, obj)
+    #     return obj
 
     def post(self, request, *args, **kwargs):
         remarks_text = request.DATA.get('remarks', None)
