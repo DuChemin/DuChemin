@@ -16,6 +16,13 @@ from duchemin.models.content_block import DCContentBlock
 from duchemin.models.comment import DCComment
 from duchemin.models.note import DCNote
 
+# method for admin reindex all entries to solr
+def reindex_in_solr(modeladmin, request, queryset):
+    for item in queryset:
+        item.save()
+
+reindex_in_solr.short_description = "Reindex selected in Solr"
+
 
 class DCAnalysisAdmin(admin.ModelAdmin):
     MODEL_FIELDS = (
@@ -62,7 +69,7 @@ class DCAnalysisAdmin(admin.ModelAdmin):
     list_display = ["id", 'analyst', 'phrase_number', 'start_measure', 'stop_measure']
     search_fields = ["id", 'analyst__surname', 'composition_number__title']
     list_filter = ('needs_review',)
-    actions = [export_as_csv_action("Export as CSV", fields=MODEL_FIELDS)]
+    actions = [export_as_csv_action("Export as CSV", fields=MODEL_FIELDS), reindex_in_solr]
 
 
 class DCPersonAdmin(admin.ModelAdmin):
@@ -78,7 +85,7 @@ class DCPersonAdmin(admin.ModelAdmin):
         )
     list_display = ['full_name', 'birth_date', 'death_date', 'active_date', 'alt_spelling']
     search_fields = ['surname', 'given_name', 'alt_spelling']
-    actions = [export_as_csv_action("Export as CSV", fields=MODEL_FIELDS)]
+    actions = [export_as_csv_action("Export as CSV", fields=MODEL_FIELDS), reindex_in_solr]
 
 
 class DCBookAdmin(admin.ModelAdmin):
@@ -101,7 +108,7 @@ class DCBookAdmin(admin.ModelAdmin):
         )
     list_display = ['title', 'publisher', 'place_publication', 'date', 'volumes', 'num_compositions', 'num_pages', 'location']
     search_fields = ['title']
-    actions = [export_as_csv_action("Export as CSV", fields=MODEL_FIELDS)]
+    actions = [export_as_csv_action("Export as CSV", fields=MODEL_FIELDS), reindex_in_solr]
 
 # # Include only if "attachments" instead of "mei_file"
 # 
@@ -131,7 +138,7 @@ class DCPieceAdmin(admin.ModelAdmin):
     list_display = ('piece_id', 'title', 'composer_id', 'composer_src', 'forces', 'print_concordances', 'ms_concordances')
     # Add 'book_id', 'book_position', above if these become necessary -- but for now piece_id is fine
     ordering = ('piece_id',)
-    actions = [export_as_csv_action]
+    actions = [export_as_csv_action, reindex_in_solr]
 
 class DCFileReconstructionInline(admin.TabularInline):
     model = DCReconstruction.attachments.through
@@ -156,7 +163,7 @@ class DCPhraseAdmin(admin.ModelAdmin):
     list_editable = ['phrase_start', 'phrase_stop']
     ordering = ('piece_id','phrase_num',)
     change_list_template = "admin/change_list_pagination_top.html"
-    actions = [export_as_csv_action("Export as CSV", fields=['phrase_id', 'piece_id', 'phrase_num', 'phrase_start', 'phrase_stop', 'phrase_text'])]
+    actions = [export_as_csv_action("Export as CSV", fields=['phrase_id', 'piece_id', 'phrase_num', 'phrase_start', 'phrase_stop', 'phrase_text']), reindex_in_solr]
 
 
 class DCCommentAdmin(admin.ModelAdmin):
