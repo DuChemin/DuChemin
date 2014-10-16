@@ -11,4 +11,4 @@ DATABASES = {
 
 #SOLR_SERVER = "http://duchemin-dev.haverford.edu:8080/duchemin-solr"
 SOLR_SERVER = "http://localhost:8080/duchemin-solr/"
-VEXF_SERVER = "http://duchemin-dev.haverford.edu:8080/notation"
+# VEXF_SERVER = "http://localhost:8080/notation"
