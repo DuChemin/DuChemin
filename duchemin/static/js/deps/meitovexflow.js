@@ -1032,7 +1032,7 @@ MeiLib.MeiDoc.prototype.updateSectionView = function(sectionplaneUpdate) {
           res++;
         }
       }
-      console.log('vars_match: ' + res);
+//      console.log('vars_match: ' + res);
       return res;
     }
     var max = 0;
@@ -1129,7 +1129,7 @@ MeiLib.MeiDoc.prototype.replaceAltInstance = function(alt_inst_update) {
       nodes2insert = extendWithNodeList(nodes2insert, var_inst_elem.childNodes);
     };
   }
-  console.log(nodes2insert)
+//  console.log(nodes2insert)
 
   var match_pseudo_attrValues = function(data1, data2) {
     data1 = data1.replace("'", '"');
@@ -2002,7 +2002,7 @@ var MEI2VF = ( function(m2v, MeiLib, VF, $, undefined) {
         var me = this, currentStaffInfo;
         currentStaffInfo = me.systemInfo.getStaffInfo(staff_n);
         if (currentStaffInfo.showKeysigCheck()) {
-          // console.log('keysg pd:'+padding);
+//          console.log('keysg pd:'+padding);
           staff.addModifier(new Vex.Flow.KeySignature(currentStaffInfo.getKeySpec(), padding));
         }
       },
@@ -3463,7 +3463,7 @@ var MEI2VF = ( function(m2v, MeiLib, VF, $, undefined) {
           me.allVexObjects.push(hairpin);
         } else {
           m2v.L('Hairpins', 'Hairpin cannot be rendered:');
-          console.log(arguments);
+//          console.log(arguments);
         }
 
       }
@@ -6160,7 +6160,7 @@ Vex.Flow.Stave = (function() {
     setX: function(x) {
       var i;
       var dx = (typeof this.x == "number") ? x - this.x : 0;
-      console.log('dx: ' + dx.toString());
+//      console.log('dx: ' + dx.toString());
       this.x = x;
       this.bounds.x = x;
       this.start_x += dx;
