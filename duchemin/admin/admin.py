@@ -168,7 +168,7 @@ class DCPhraseAdmin(admin.ModelAdmin):
 
 class DCCommentAdmin(admin.ModelAdmin):
     list_display = ['piece', 'author', 'created', 'text',]
-    ordering = ['piece', 'created',]
+    ordering = ['-created', "piece"]
     actions = [export_as_csv_action]
 
 
