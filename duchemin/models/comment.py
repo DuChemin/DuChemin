@@ -7,6 +7,7 @@ class DCComment(models.Model):
         app_label = "duchemin"
         verbose_name = "Comment"
         verbose_name_plural = "Comments"
+        ordering = ('-created',)
 
     piece = models.ForeignKey("duchemin.DCPiece", related_name="comments")
     author = models.ForeignKey(User, related_name="comments")
