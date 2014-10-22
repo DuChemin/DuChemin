@@ -58,7 +58,6 @@ class DCAnalysis(models.Model):
 
 @receiver(post_save, sender=DCAnalysis)
 def solr_index(sender, instance, created, **kwargs):
-    print "Indexing in solr"
     import uuid
     from django.conf import settings
     import solr
@@ -67,7 +66,6 @@ def solr_index(sender, instance, created, **kwargs):
     record = solrconn.query("analysis_id:{0}".format(instance.id))
     if record:
         # the record already exists, so we'll remove it first.
-        print "Deleting ".format(record.results[0]['id'])
         solrconn.delete(record.results[0]['id'])
 
     # make it clear what we're working with...
