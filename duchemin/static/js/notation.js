@@ -1,26 +1,35 @@
-function attachPhraseClickEvents() {
+function attachPhraseClickEvents()
+{
     $('.view-phrase').on({
-        'click': function(event) {
+        'click': function(event)
+        {
             var is_analysis;
-            if ($(this).data('phrasenum')) {
+
+            if ($(this).data('phrasenum'))
+            {
                 is_analysis = false;
             }
-            else {
+            else
+            {
                 is_analysis = true;
             }
 
             $("#phrase-modal").remove();
+
             var modal = $("<div />", {
-                "id": "phrase-modal",
+                "id": "phrase-modal"
             }).appendTo("body");
 
             // Distinguish between Phrase and Analysis slices
             var title_string;
-            if (is_analysis) {
+
+            if (is_analysis)
+            {
                 title_string = ($(this).data('pieceid') + ', measures ' +
                     $(this).data('start') + '–' + $(this).data('stop'))
             }
-            else {
+            else
+            {
                 title_string = $(this).data('pieceid') + ', phrase ' +
                     $(this).data('phrasenum')
             }
@@ -31,6 +40,7 @@ function attachPhraseClickEvents() {
                 'modal': true,
                 'title': title_string,
             });
+
             $("<div />", {
                 "class": "phrase-modal-body"
             }).appendTo(modal);
@@ -46,7 +56,8 @@ function attachPhraseClickEvents() {
     });
 }
 
-function ajaxRenderPhrase(mei_link, start, end, is_analysis) {
+function ajaxRenderPhrase(mei_link, start, end, is_analysis)
+{
     var loadedXML = meiView.Util.loadXMLDoc(mei_link);
     var filteredXml = meiView.filterMei(loadedXML, { noSysBreak:true });
     var meiDoc = new MeiLib.MeiDoc(filteredXml);
@@ -87,7 +98,7 @@ function ajaxRenderPhrase(mei_link, start, end, is_analysis) {
         displayFirstPage: true,
         scale: 0.8,
         mode: meiView.Mode.SINGLE_PAGE,
-        pxpMeasure: 280,
+        pxpMeasure: 280
     });
 
     var modal = $("#phrase-modal");
