@@ -1,9 +1,11 @@
+from django.contrib.auth.models import User
 from duchemin.models.piece import DCPiece
 from duchemin.models.person import DCPerson
 from duchemin.models.phrase import DCPhrase
 from duchemin.models.book import DCBook
 from duchemin.models.comment import DCComment
 from duchemin.models.analysis import DCAnalysis
+from duchemin.models.userprofile import DCUserProfile
 from rest_framework import serializers
 
 
@@ -78,15 +80,53 @@ class DCAnalysisPieceSerializer(serializers.HyperlinkedModelSerializer):
                   'comment')
 
 
+class DCUserCommentSerializer(serializers.HyperlinkedModelSerializer):
+    profile = serializers.SerializerMethodField('get_user_profile_url')
+    full_name = serializers.SerializerMethodField('get_profile_full_name')
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'username', 'profile', 'full_name')
+
+    def get_user_profile_url(self, obj):
+        request = self.context.get('request', None)
+        if not request.user.is_authenticated():
+            return ""
+        url = request.build_absolute_uri("/person/{0}".format(obj.profile.person.person_id))
+        return url
+
+    def get_profile_full_name(self, obj):
+        return obj.profile.person.full_name
+
+
+class DCPieceCommentSerializer(serializers.HyperlinkedModelSerializer):
+    author = DCUserCommentSerializer()
+
+    class Meta:
+        model = DCComment
+        fields = ('url', 'text', 'author', 'created')
+
+
+class DCPieceDiscussionSerializer(serializers.HyperlinkedModelSerializer):
+    comments = DCPieceCommentSerializer(many=True)
+    book_id = DCBookPieceSerializer()
+
+    class Meta:
+        model = DCPiece
+        lookup_field = 'piece_id'
+        fields = ('url', 'title', 'piece_id', 'comments', 'book_id')
+
+
 class DCPieceSerializer(serializers.HyperlinkedModelSerializer):
     composer_id = DCComposerPieceSerializer()
     phrases = DCPhrasePieceSerializer()
     book_id = DCBookPieceSerializer()
     analyses = DCAnalysisPieceSerializer()
+    comments = DCPieceCommentSerializer()
 
     class Meta:
         model = DCPiece
-        lookup_field = 'piece_id'
+        lookup_field = "piece_id"
         fields = ('url',
                   'piece_id',
                   'title',
@@ -96,19 +136,5 @@ class DCPieceSerializer(serializers.HyperlinkedModelSerializer):
                   'pdf_link',
                   'audio_link',
                   'book_id',
-                  'analyses')
-
-
-class DCPieceCommentSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = DCComment
-        fields = ('url', 'text', 'author')
-
-
-class DCPieceDiscussionSerializer(serializers.HyperlinkedModelSerializer):
-    comments = DCPieceCommentSerializer(many=True)
-
-    class Meta:
-        model = DCPiece
-        lookup_field = 'piece_id'
-        fields = ('url', 'title', 'piece_id', 'comments')
+                  'analyses',
+                  'comments')
