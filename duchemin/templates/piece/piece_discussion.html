@@ -6,6 +6,10 @@
 <title>Lost Voices &mdash; Discussion on {{ piece.piece_id }}</title>
 {% endblock %}
 
+{% block header %}
+    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet">
+{% endblock %}
+
 
 {% block wrap %}
   <div class="row-fluid">
@@ -77,7 +81,6 @@
 
   </div><!--/row-->
 
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" rel="stylesheet"></link>
   <script src="{{ STATIC_URL }}js/vendor/jquery.cookie.js"></script>
   <script src="{{ STATIC_URL }}js/notation.js"></script>
   <script src="{{ STATIC_URL }}js/favourites.js"></script>
@@ -85,8 +88,8 @@
 
   <script>
     $(document).ready(function (){
-      startCommentFeed('{{piece.id}}');
-      attachCommentsAction();
+//      startCommentFeed('{{piece.id}}');
+//      attachCommentsAction();
     });
   </script>
 
