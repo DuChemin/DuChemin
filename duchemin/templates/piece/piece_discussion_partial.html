@@ -1,0 +1,20 @@
+<div id="discussion-block">
+    {% for comment in content.comments|slice:":5" %}
+        <div class="comment">
+            <div class="author">
+                <h5>
+                    <a href="{{ comment.author.url }}">{{ comment.author.full_name }}</a>
+                    ({{ comment.created }})
+                </h5>
+            </div>
+            <div class="text">
+                <p>{{ comment.text }}</p>
+            </div>
+        </div>
+    {% empty %}
+        <p id='empty-block'>No recent comments.</p>
+    {% endfor %}
+    <div>
+        <p><a href="{{ content.url }}discussion/">View the full discussion.</a></p>
+    </div>
+</div>

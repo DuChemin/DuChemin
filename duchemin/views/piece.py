@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.renderers import JSONRenderer
 
-from duchemin.serializers.piece import DCPieceSerializer, DCPieceDiscussionSerializer
+from duchemin.serializers.piece import DCPieceSerializer
 from duchemin.models.piece import DCPiece
 from duchemin.renderers.custom_html_renderer import CustomHTMLRenderer
 
@@ -38,5 +38,5 @@ class PieceDetail(generics.RetrieveAPIView):
 class PieceDiscussionDetail(generics.RetrieveAPIView):
     model = DCPiece
     lookup_field = 'piece_id'
-    serializer_class = DCPieceDiscussionSerializer
+    serializer_class = DCPieceSerializer
     renderer_classes = (JSONRenderer, PieceDiscussionDetailHTMLRenderer)

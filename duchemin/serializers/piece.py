@@ -107,22 +107,12 @@ class DCPieceCommentSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'text', 'author', 'created')
 
 
-class DCPieceDiscussionSerializer(serializers.HyperlinkedModelSerializer):
-    comments = DCPieceCommentSerializer(many=True)
-    book_id = DCBookPieceSerializer()
-
-    class Meta:
-        model = DCPiece
-        lookup_field = 'piece_id'
-        fields = ('url', 'title', 'piece_id', 'comments', 'book_id')
-
-
 class DCPieceSerializer(serializers.HyperlinkedModelSerializer):
     composer_id = DCComposerPieceSerializer()
     phrases = DCPhrasePieceSerializer()
     book_id = DCBookPieceSerializer()
     analyses = DCAnalysisPieceSerializer()
-    comments = DCPieceCommentSerializer()
+    comments = DCPieceCommentSerializer(many=True)
 
     class Meta:
         model = DCPiece
