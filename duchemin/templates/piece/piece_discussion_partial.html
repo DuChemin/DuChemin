@@ -14,7 +14,10 @@
     {% empty %}
         <p id='empty-block'>No recent comments.</p>
     {% endfor %}
+
+    {% if condensed_view %}
     <div>
         <p><a href="{{ content.url }}discussion/">View the full discussion.</a></p>
     </div>
+    {% endif %}
 </div>

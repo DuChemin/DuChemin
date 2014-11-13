@@ -18,36 +18,31 @@
           <hgroup class="show-title page-title span12">
             <h1>{{ content.title|apostrophe }}</h1>
             <h2><a href="/person/{{ content.composer_id.person_id }}">{{ content.composer_id.full_name|apostrophe }}</a></h2>
-            <h3>{{ content.piece_id }}{% if user.is_authenticated %}
-                {% include "main/favourites/favourites.html" with is_favourite=is_favourite piece_id=content.piece_id %}
-            {% endif %}</h3>
+            <h3>{{ content.piece_id }}
+                {% if user.is_authenticated %}
+                    {% include "main/favourites/favourites.html" with is_favourite=is_favourite piece_id=content.piece_id %}
+                {% endif %}
+            </h3>
           </hgroup>
           <div class="row-fluid">
             <div class="span12">
-              <table class="table table-bordered table-striped table-hover pull-up" style="margin-top:10px;">
-                <thead>
-                  <tr>
-                    <th colspan="2">Discussion</th>
-                  </tr>
-                </thead>
-                <tbody id="discussion-table">
-                  {% for comment in content.comments %}
-                      <tr>
-                        <td class="discussion-author-info"><a href="{{ comment.author.profile }}">{{ comment.author.first_name }} {{ comment.author.last_name }}</a> <br> {{ comment.created }}</td>
-                        <td>{{ comment.text }}</td>
-                      </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-              {% if user.is_authenticated %}
-              <a href="/profile">{{ user.first_name }} {{ user.last_name }}</a>
-              <form id="comment-form">
-                {% csrf_token %}
-                <textarea id="comment-field" form="comment-form" name="text" rows="2" class="span12" placeholder="Type a comment here"></textarea>
-                <input type="hidden" name="piece_id" value="{{ content.piece_id }}"/>
-                <input type="submit" name="comment-submit" value="Comment"/>
-              </form>
-              {% endif %}
+              {% include 'piece/piece_discussion_partial.html' with condensed_view=False %}
+              {% include 'piece/piece_add_comment_partial.html' %}
+
+{#              {% if user.is_authenticated %}#}
+{#                <a href="/profile">{{ user.first_name }} {{ user.last_name }}</a>#}
+{#                <textarea id="comment-field"#}
+{#                          form="comment-form"#}
+{#                          name="text"#}
+{#                          rows="2"#}
+{#                          class="span12"#}
+{#                          placeholder="Type a comment here"></textarea>#}
+{#                <button type="submit"#}
+{#                          data-piece="{{ content.piece_id }}"#}
+{#                          id="comment-submit"#}
+{#                          name="comment-submit"#}
+{#                          class="btn btn-small btn-block">Comment</button>#}
+{#              {% endif %}#}
             </div>
           </div>
         </div>
@@ -56,7 +51,7 @@
           <div class="well span12">
             <dl class="well-list account-info-list">
               <dt>Source:</dt>
-              <dd><a href="/book/{{ content.book_id.book_id }}">{{ content.book_id.title }}</a></dd>
+              <dd><a href="{{ content.book_id.url }}">{{ content.book_id.title }}</a></dd>
               <dt>View:</dt>
               <dd><a href="{{ content.pdf_link }}" target="_blank">Complete Modern Edition (PDF)</a><br/>
               <a href="{{ content.mei_link }}" target="_blank">MEI File</a></dd>
@@ -65,7 +60,7 @@
             </dl>
           </div>
           <div id="sidebar" class="span10">
-            <h3><a href="/piece/{{ content.piece_id }}/">Return to Piece View</a></h3>
+            <h3><a href="{{ content.url }}">Return to Piece View</a></h3>
             
             {% if user.is_authenticated %}
               <p>Note that all comments are permanent. If you need a comment to be removed, you can <a href="mailto:{{ADMIN_EMAIL}}?subject=Remove comment on Piece {{ content.piece_id }}">contact the administrator</a>.</p>
@@ -76,4 +71,14 @@
     </div><!--/span-->
 
   </div><!--/row-->
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/comments.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            attachCommentAction();
+        });
+    </script>
 {% endblock %}
