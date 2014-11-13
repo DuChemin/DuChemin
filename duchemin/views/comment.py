@@ -49,22 +49,18 @@ class CommentList(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         piece_id = request.DATA.get('piece_id', None)
-        comment_text = request.DATA.get('text', None)
+        comment_text = request.DATA.get('comment_text', None)
 
-        piece_obj = get_object_or_404(DCPiece, piece_id=piece_id)
-
-        if comment_text in EMPTY_COMMENTS:
-            return Response({"message": "Empty Comments are not allowed."}, status=status.HTTP_400_BAD_REQUEST)
-
+        piece_obj = DCPiece.objects.get(piece_id=piece_id)
         current_user = User.objects.get(pk=request.user.id)
+
         comment = DCComment()
         comment.piece = piece_obj
         comment.author = current_user
         comment.text = comment_text
         comment.save()
 
-        serialized = DCCommentSerializer(comment).data
-
+        serialized = DCCommentSerializer(comment, context={'request': request}).data
         return Response(serialized, status=status.HTTP_201_CREATED)
 
 
