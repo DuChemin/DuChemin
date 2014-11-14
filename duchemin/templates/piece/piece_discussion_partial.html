@@ -1,19 +1,40 @@
+{# There doesn't seem to be any sane way of controlling the slice in the template, so this partial isn't very DRY. #}
 <div id="discussion-block">
-    {% for comment in content.comments|slice:":5" %}
-        <div class="comment">
-            <div class="author">
-                <h5>
-                    <a href="{{ comment.author.url }}">{{ comment.author.full_name }}</a>
-                    ({{ comment.created }})
-                </h5>
+    {% if condensed_view %}
+        {% for comment in content.comments|slice:":5" %}
+            <div class="comment">
+                <div class="author">
+                    <h5>
+                        <a href="{{ comment.author.profile }}">{{ comment.author.display_name }}</a>
+                        ({{ comment.created }})
+                    </h5>
+                </div>
+                <div class="text">
+                    <p>{{ comment.text }}</p>
+                </div>
             </div>
-            <div class="text">
-                <p>{{ comment.text }}</p>
+        {% empty %}
+            <p id='empty-block'>No recent comments.</p>
+        {% endfor %}
+    {% else %}
+        <hr />
+        {% for comment in content.comments %}
+            <div class="comment {% cycle "" "discussion-stripe" %} discussion-sizes">
+                <div class="author">
+                    <h5>
+                        <a href="{{ comment.author.profile }}">{{ comment.author.display_name }}</a>
+                        ({{ comment.created }})
+                    </h5>
+                </div>
+                <div class="text">
+                    <p>{{ comment.text }}</p>
+                </div>
             </div>
-        </div>
-    {% empty %}
-        <p id='empty-block'>No recent comments.</p>
-    {% endfor %}
+        {% empty %}
+            <p id='empty-block'>No recent comments.</p>
+        {% endfor %}
+    {% endif %}
+
 
     {% if condensed_view %}
     <div>

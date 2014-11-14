@@ -13,53 +13,40 @@
 {% block wrap %}
   <div class="row-fluid">
     <div class="span12">
-      <div class="show-heading row-fluid">
+      <div class="show-heading">
         <div class="span8">
-          <hgroup class="show-title page-title span12">
-            <h1>{{ content.title|apostrophe }}</h1>
-            <h2><a href="/person/{{ content.composer_id.person_id }}">{{ content.composer_id.full_name|apostrophe }}</a></h2>
-            <h3>{{ content.piece_id }}
-                {% if user.is_authenticated %}
-                    {% include "main/favourites/favourites.html" with is_favourite=is_favourite piece_id=content.piece_id %}
-                {% endif %}
-            </h3>
-          </hgroup>
           <div class="row-fluid">
-            <div class="span12">
+              <hgroup class="show-title page-title">
+                <h1>{{ content.title|apostrophe }}</h1>
+                <h2><a href="/person/{{ content.composer_id.person_id }}">{{ content.composer_id.full_name|apostrophe }}</a></h2>
+                <h3>{{ content.piece_id }}
+                    {% if user.is_authenticated %}
+                        {% include "main/favourites/favourites.html" with is_favourite=is_favourite piece_id=content.piece_id %}
+                    {% endif %}
+                </h3>
+              </hgroup>
+          </div>
+          <div class="row-fluid">
               {% include 'piece/piece_discussion_partial.html' with condensed_view=False %}
               {% include 'piece/piece_add_comment_partial.html' %}
-
-{#              {% if user.is_authenticated %}#}
-{#                <a href="/profile">{{ user.first_name }} {{ user.last_name }}</a>#}
-{#                <textarea id="comment-field"#}
-{#                          form="comment-form"#}
-{#                          name="text"#}
-{#                          rows="2"#}
-{#                          class="span12"#}
-{#                          placeholder="Type a comment here"></textarea>#}
-{#                <button type="submit"#}
-{#                          data-piece="{{ content.piece_id }}"#}
-{#                          id="comment-submit"#}
-{#                          name="comment-submit"#}
-{#                          class="btn btn-small btn-block">Comment</button>#}
-{#              {% endif %}#}
-            </div>
           </div>
         </div>
         
-        <div class="span4">
-          <div class="well span12">
-            <dl class="well-list account-info-list">
-              <dt>Source:</dt>
-              <dd><a href="{{ content.book_id.url }}">{{ content.book_id.title }}</a></dd>
-              <dt>View:</dt>
-              <dd><a href="{{ content.pdf_link }}" target="_blank">Complete Modern Edition (PDF)</a><br/>
-              <a href="{{ content.mei_link }}" target="_blank">MEI File</a></dd>
-              <dt>Listen:</dt>
-              <dd><a href="{{ content.audio_link }}" target="_blank">Complete Recording (MP3)</a></dd>
-            </dl>
+        <div id="sidebar" class="span4">
+          <div class="row-fluid">
+            <div class="well">
+                <dl class="well-list account-info-list">
+                  <dt>Source:</dt>
+                  <dd><a href="{{ content.book_id.url }}">{{ content.book_id.title }}</a></dd>
+                  <dt>View:</dt>
+                  <dd><a href="{{ content.pdf_link }}" target="_blank">Complete Modern Edition (PDF)</a><br/>
+                  <a href="{{ content.mei_link }}" target="_blank">MEI File</a></dd>
+                  <dt>Listen:</dt>
+                  <dd><a href="{{ content.audio_link }}" target="_blank">Complete Recording (MP3)</a></dd>
+                </dl>
+            </div>
           </div>
-          <div id="sidebar" class="span10">
+          <div class="row-fluid">
             <h3><a href="{{ content.url }}">Return to Piece View</a></h3>
             
             {% if user.is_authenticated %}
@@ -69,7 +56,6 @@
         </div><!--/span-->
       </div>
     </div><!--/span-->
-
   </div><!--/row-->
 {% endblock %}
 

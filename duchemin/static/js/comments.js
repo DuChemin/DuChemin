@@ -59,7 +59,8 @@ var attachCommentAction = function ()
             // clear the comment field.
             $("#comment-field").val("");
 
-            showNotification("Success!", "Your comment was successfully added.", 'success');
+            // show a notification of success
+            showNotification("Success!", "Your comment was successfully added.", 'alert-success', 'comment-notifications');
         });
 
         return false;
