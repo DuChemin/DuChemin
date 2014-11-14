@@ -20,7 +20,7 @@
                     <th>Date of Publication</th>
                     <th>Volumes</th>
                     <th>Part S-T ID</th>
-                    <th>Part S-B ID</th>
+                    <th>Part C-B ID</th>
                     <th>Compositions</th>
                     <th>Pages</th>
                     <th>Location</th>
@@ -35,12 +35,12 @@
                     <td>{{ book.date }}</td>
                     <td>{{ book.volumes }}</td>
                     <td>{{ book.part_st_id }}</td>
-                    <td>{{ book.part_sb_id }}</td>
+                    <td>{{ book.part_cb_id }}</td>
                     <td>{{ book.num_compositions }}</td>
                     <td>{{ book.num_pages }}</td>
                     <td>{{ book.location }}</td>
                     <td>{{ book.rism }}</td>
-                    <td>{{ book.cesr }}</td>
+                    <td><a href="{{ book.cesr }}">View Book at CESR</a></td>
                 </tr>
                 {% endfor %}
             </table>
