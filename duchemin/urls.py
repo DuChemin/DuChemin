@@ -8,6 +8,7 @@ from duchemin.views.note import NoteList, NoteDetail
 from duchemin.views.user import UserList, UserDetail
 from duchemin.views.piece import PieceList, PieceDetail, PieceDiscussionDetail
 from duchemin.views.book import BookList, BookDetail
+from duchemin.views.discussion import DiscussionList
 from duchemin.views.reconstruction import ReconstructionList, ReconstructionDetail
 from duchemin.views.auth import SessionAuth, SessionStatus, SessionClose
 
@@ -36,6 +37,8 @@ if 'django.contrib.admin' in settings.INSTALLED_APPS:
 
         # url(r'^piece/(?P<pk>[0-9a-zA-Z]+)/$', 'piece', name="dcpiece-detail"),
         # url(r'^pieces/$', 'pieces', name="dcpiece-list"),
+
+        url(r'^discussions/$', DiscussionList.as_view(), name="dcdiscussion-list"),
 
         url(r'^book/(?P<book_id>[0-9]+)/$', BookDetail.as_view(), name="dcbook-detail"),
         url(r'^books/$', BookList.as_view(), name="dcbook-list"),
