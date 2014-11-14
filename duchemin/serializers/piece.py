@@ -82,11 +82,11 @@ class DCAnalysisPieceSerializer(serializers.HyperlinkedModelSerializer):
 
 class DCUserCommentSerializer(serializers.HyperlinkedModelSerializer):
     profile = serializers.SerializerMethodField('get_user_profile_url')
-    full_name = serializers.SerializerMethodField('get_profile_full_name')
+    display_name = serializers.SerializerMethodField('get_profile_display_name')
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'username', 'profile', 'full_name')
+        fields = ('first_name', 'last_name', 'username', 'profile', 'display_name')
 
     def get_user_profile_url(self, obj):
         request = self.context.get('request', None)
@@ -95,8 +95,8 @@ class DCUserCommentSerializer(serializers.HyperlinkedModelSerializer):
         url = request.build_absolute_uri("/person/{0}".format(obj.profile.person.person_id))
         return url
 
-    def get_profile_full_name(self, obj):
-        return obj.profile.person.full_name
+    def get_profile_display_name(self, obj):
+        return obj.profile.person.display_name
 
 
 class DCPieceCommentSerializer(serializers.HyperlinkedModelSerializer):
