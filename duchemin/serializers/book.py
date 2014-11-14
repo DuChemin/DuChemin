@@ -9,6 +9,7 @@ class DCBookPersonSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = DCPerson
+        lookup_field = 'person_id'
         fields = ('url', 'full_name')
 
 
