@@ -18,9 +18,9 @@ class PhraseList(generics.ListAPIView):
     model = DCPhrase
     serializer_class = DCPhraseSerializer
     renderer_classes = (JSONRenderer, PhraseListHTMLRenderer)
-    paginate_by = 100
+    paginate_by = 20
     paginate_by_param = 'page_size'
-    max_paginate_by = 200
+    max_paginate_by = 50
 
 
 class PhraseDetail(generics.RetrieveAPIView):
