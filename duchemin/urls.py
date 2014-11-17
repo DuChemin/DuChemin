@@ -8,7 +8,6 @@ from duchemin.views.note import NoteList, NoteDetail
 from duchemin.views.user import UserList, UserDetail
 from duchemin.views.piece import PieceList, PieceDetail, PieceDiscussionDetail
 from duchemin.views.book import BookList, BookDetail
-from duchemin.views.discussion import DiscussionList
 from duchemin.views.reconstruction import ReconstructionList, ReconstructionDetail
 from duchemin.views.auth import SessionAuth, SessionStatus, SessionClose
 
@@ -35,11 +34,6 @@ if 'django.contrib.admin' in settings.INSTALLED_APPS:
         url(r'^pieces/$', PieceList.as_view(), name="dcpiece-list"),
         url(r'^piece/(?P<piece_id>[0-9a-zA-Z]+)/$', PieceDetail.as_view(), name="dcpiece-detail"),
 
-        # url(r'^piece/(?P<pk>[0-9a-zA-Z]+)/$', 'piece', name="dcpiece-detail"),
-        # url(r'^pieces/$', 'pieces', name="dcpiece-list"),
-
-        url(r'^discussions/$', DiscussionList.as_view(), name="dcdiscussion-list"),
-
         url(r'^book/(?P<book_id>[0-9]+)/$', BookDetail.as_view(), name="dcbook-detail"),
         url(r'^books/$', BookList.as_view(), name="dcbook-list"),
 
@@ -60,7 +54,8 @@ if 'django.contrib.admin' in settings.INSTALLED_APPS:
         url(r'^users/$', UserList.as_view(), name="user-list"),
         url(r'^user/(?P<pk>[0-9]+)/$', UserDetail.as_view(), name="user-detail"),
 
-        url(r'^comments/$', CommentList.as_view(), name="dccomment-list"),
+        # a 'discussion' is a list of comments
+        url(r'^discussions/$', CommentList.as_view(), name="dcdiscussion-list"),
         url(r'^comment/(?P<pk>[0-9]+)/$', CommentDetail.as_view(), name='dccomment-detail'),
 
         url(r'^notes/$', NoteList.as_view(), name="dcnote-list"),
