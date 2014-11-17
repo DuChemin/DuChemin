@@ -1,4 +1,3 @@
-import urlparse
 from rest_framework import generics
 from rest_framework.renderers import JSONRenderer
 from rest_framework import permissions
@@ -6,7 +5,6 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from django.contrib.auth.models import User
-from django.core.urlresolvers import resolve
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 
@@ -43,9 +41,6 @@ class NoteList(generics.ListCreateAPIView):
         note.piece = piece_obj
         note.author = current_user
         note.text = note_text
-
-        # Since `current_user` was gotten from the login, we're not
-        # letting just anybody write anywhere.
         note.save()
 
         serialized = DCNoteSerializer(note).data
@@ -61,14 +56,14 @@ class NoteDetail(generics.RetrieveUpdateDestroyAPIView):
     paginate_by = 100
     paginate_by_param = 'page_size'
     max_paginate_by = 200
-    slug_field="piece"
+    slug_field = "piece"
 
-    def get_object(self):
+    def get_object(self, queryset=None):
         try:
             current_user = User.objects.get(pk=self.request.user.id)
-        	# Get the most recently updated note associated with our piece_id
+            # Get the most recently updated note associated with our piece_id
             # out of the set of this user's notes
-            return DCNote.objects.filter(author=current_user,piece__piece_id=self.kwargs["pk"]).order_by("-updated")[0]
+            return DCNote.objects.filter(author=current_user, piece__piece_id=self.kwargs["pk"]).order_by("-updated")[0]
         except IndexError:
             raise Http404
 
