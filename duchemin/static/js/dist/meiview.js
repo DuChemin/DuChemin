@@ -51,18 +51,29 @@ meiView.VarTypeList = {
 meiView.Util = {};
 
 meiView.Util.loadXMLDoc = function(filename) {
-  if (window.XMLHttpRequest) {
-    // code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp=new XMLHttpRequest();
-  } else {
-    // code for IE6, IE5
-    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  xmlhttp.open("GET",filename,false);
-  xmlhttp.send();
-  if (!xmlhttp.responseXML) throw filename + ' cannot be loaded.';
-  return xmlhttp.responseXML;
-}
+    var xmlhttp;
+
+    if (window.XMLHttpRequest)
+    {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    }
+    else
+    {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.open("GET", filename, false);
+    xmlhttp.send();
+
+    console.log(xmlhttp);
+
+    if (!xmlhttp.responseXML)
+        throw filename + ' cannot be loaded.';
+
+    return xmlhttp.responseXML;
+};
 
 meiView.SelectedSuppliedPartList = function(type_name) {
   this.init(type_name);
