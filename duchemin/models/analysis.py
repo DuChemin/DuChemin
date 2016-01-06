@@ -49,6 +49,7 @@ class DCAnalysis(models.Model):
     earlier_phrase = models.CharField(max_length=16, blank=True, null=True)
     comment = models.TextField(blank=True, null=True)
     repeat_exact_varied = models.CharField(max_length=16, blank=True, null=True)
+    nanopub_link = models.CharField(max_length=255, blank=True, null=True)
 
     needs_review = models.BooleanField(default=False)
 
@@ -56,7 +57,7 @@ class DCAnalysis(models.Model):
         return u"{0}".format(self.id)
 
 
-@receiver(post_save, sender=DCAnalysis)
+# @receiver(post_save, sender=DCAnalysis)
 def solr_index(sender, instance, created, **kwargs):
     import uuid
     from django.conf import settings

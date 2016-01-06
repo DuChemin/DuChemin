@@ -117,7 +117,7 @@
                             </div>
                         {% endif %}
 
-                        <h3>Discussion</a></h3>
+                        <h3>Discussion</h3>
                         <div class="accordion-group">
                             <div class="accordion-heading">
                                 <a class="accordion-toggle" id="sidebar-accordion" data-toggle="collapse"
@@ -159,7 +159,8 @@
                                 <th>Phrase</th>
                                 <th>Measures</th>
                                 <th>Analyst</th>
-                                <th>Show details</th>
+                                <th>Details</th>
+                                <th>Nanopublication</th>
                             </tr>
 
                             {% for analysis in content.analyses %}
@@ -179,6 +180,9 @@
                                     <td>
                                         <a href="#" class="analyses-info-expand"
                                            target="analyses-info-{{ forloop.counter }}">Expand</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ analysis.nanopub_link }}">Nanopub</a>
                                     </td>
                                 </tr>
                                 <tr id="analyses-info-{{ forloop.counter }}" class="analyses-info">

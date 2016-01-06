@@ -77,7 +77,8 @@ class DCAnalysisPieceSerializer(serializers.HyperlinkedModelSerializer):
                   'repeat_kind',
                   'earlier_phrase',
                   'repeat_exact_varied',
-                  'comment')
+                  'comment',
+                  'nanopub_link')
 
 
 class DCUserCommentSerializer(serializers.HyperlinkedModelSerializer):
