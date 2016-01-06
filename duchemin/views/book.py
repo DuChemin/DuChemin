@@ -15,7 +15,7 @@ class BookDetailHTMLRenderer(CustomHTMLRenderer):
 
 
 class BookList(generics.ListAPIView):
-    model = DCBook
+    queryset = DCBook.objects.all()
     serializer_class = DCBookSerializer
     renderer_classes = (JSONRenderer, BookListHTMLRenderer)
     paginate_by = 100
@@ -24,7 +24,7 @@ class BookList(generics.ListAPIView):
 
 
 class BookDetail(generics.RetrieveAPIView):
-    model = DCBook
+    queryset = DCBook.objects.all()
     lookup_field = "book_id"
     serializer_class = DCBookSerializer
     renderer_classes = (JSONRenderer, BookDetailHTMLRenderer)

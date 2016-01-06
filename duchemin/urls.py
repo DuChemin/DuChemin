@@ -55,13 +55,16 @@ if 'django.contrib.admin' in settings.INSTALLED_APPS:
         url(r'^user/(?P<pk>[0-9]+)/$', UserDetail.as_view(), name="user-detail"),
 
         # a 'discussion' is a list of comments
-        url(r'^discussions/$', CommentList.as_view(), name="dcdiscussion-list"),
+        # url(r'^comments/$', CommentList.as_view(), name="dcdiscussion-list"),
         url(r'^comment/(?P<pk>[0-9]+)/$', CommentDetail.as_view(), name='dccomment-detail'),
+        url(r'^discussions/$', CommentList.as_view(), name="dcdiscussions-list"),
 
         url(r'^notes/$', NoteList.as_view(), name="dcnote-list"),
         url(r'^note/(?P<pk>[a-zA-Z0-9]+)/$', NoteDetail.as_view(), name='dcnote-detail'),
 
         url(r'^password_change/$', 'my_password_change'),
+
+        url(r'^mei/DC0101.xml', 'pass_to_mei'),
     )
 
     urlpatterns += patterns('duchemin.views.search',

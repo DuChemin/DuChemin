@@ -15,7 +15,7 @@ class AnalysisDetailHTMLRenderer(CustomHTMLRenderer):
 
 
 class AnalysisList(generics.ListAPIView):
-    model = DCAnalysis
+    queryset = DCAnalysis.objects.all()
     serializer_class = DCAnalysisSerializer
     renderer_classes = (JSONRenderer, AnalysisListHTMLRenderer)
     paginate_by = 100
@@ -24,6 +24,6 @@ class AnalysisList(generics.ListAPIView):
 
 
 class AnalysisDetail(generics.RetrieveAPIView):
-    model = DCAnalysis
+    queryset = DCAnalysis.objects.all()
     serializer_class = DCAnalysisSerializer
     renderer_classes = (JSONRenderer, AnalysisDetailHTMLRenderer)

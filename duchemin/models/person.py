@@ -33,3 +33,7 @@ class DCPerson(models.Model):
             return u"{0} {1}".format(self.given_name, self.surname)
         else:
             return u"{0}".format(self.surname)
+
+    @property
+    def has_profile(self):
+        return self.profile.exists()

@@ -30,11 +30,12 @@ class DCPersonAnalysesSerializer(serializers.HyperlinkedModelSerializer):
 
 class DCPersonListSerializer(serializers.HyperlinkedModelSerializer):
     full_name = serializers.Field(source="full_name")
+    has_profile = serializers.Field(source='has_profile')
 
     class Meta:
         model = DCPerson
         lookup_field = 'person_id'
-        fields = ('url',)
+        fields = ('url', 'full_name', 'birth_date', 'death_date', 'active_date', 'alt_spelling', 'has_profile')
 
 
 class DCPersonDetailSerializer(serializers.HyperlinkedModelSerializer):

@@ -20,7 +20,8 @@ class PersonDetailHTMLRenderer(CustomHTMLRenderer):
 
 
 class PersonList(generics.ListAPIView):
-    model = DCPerson
+    # model = DCPerson
+    queryset = DCPerson.objects.filter(profile__isnull=True)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     serializer_class = DCPersonListSerializer
     renderer_classes = (JSONRenderer, PersonListHTMLRenderer)

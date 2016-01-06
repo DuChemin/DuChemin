@@ -19,7 +19,7 @@ class PieceDiscussionDetailHTMLRenderer(CustomHTMLRenderer):
 
 
 class PieceList(generics.ListAPIView):
-    model = DCPiece
+    queryset = DCPiece.objects.all()
     serializer_class = DCPieceSerializer
     renderer_classes = (JSONRenderer, PieceListHTMLRenderer)
     paginate_by = 20
@@ -29,14 +29,14 @@ class PieceList(generics.ListAPIView):
 
 
 class PieceDetail(generics.RetrieveAPIView):
-    model = DCPiece
+    queryset = DCPiece.objects.all()
     lookup_field = 'piece_id'
     serializer_class = DCPieceSerializer
     renderer_classes = (JSONRenderer, PieceDetailHTMLRenderer)
 
 
 class PieceDiscussionDetail(generics.RetrieveAPIView):
-    model = DCPiece
+    queryset = DCPiece.objects.all()
     lookup_field = 'piece_id'
     serializer_class = DCPieceSerializer
     renderer_classes = (JSONRenderer, PieceDiscussionDetailHTMLRenderer)

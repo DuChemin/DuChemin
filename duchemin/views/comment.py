@@ -21,7 +21,6 @@ class PieceCommentDetailHTMLRenderer(CustomHTMLRenderer):
 
 
 class CommentList(generics.ListCreateAPIView):
-    model = DCComment
     serializer_class = DCCommentSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     renderer_classes = (JSONRenderer, CommentListHTMLRenderer)
@@ -61,7 +60,7 @@ class CommentList(generics.ListCreateAPIView):
 
 
 class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
-    model = DCComment
+    queryset = DCComment.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     serializer_class = DCCommentSerializer
     renderer_classes = (JSONRenderer,)

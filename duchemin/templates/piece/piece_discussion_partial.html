@@ -17,7 +17,6 @@
             <p id='empty-block'>No recent comments.</p>
         {% endfor %}
     {% else %}
-        <hr />
         {% for comment in content.comments %}
             <div class="comment {% cycle "" "discussion-stripe" %} discussion-sizes">
                 <div class="author">

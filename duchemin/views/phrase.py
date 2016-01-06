@@ -15,7 +15,7 @@ class PhraseDetailHTMLRenderer(CustomHTMLRenderer):
 
 
 class PhraseList(generics.ListAPIView):
-    model = DCPhrase
+    queryset = DCPhrase.objects.all()
     serializer_class = DCPhraseSerializer
     renderer_classes = (JSONRenderer, PhraseListHTMLRenderer)
     paginate_by = 20
@@ -24,6 +24,6 @@ class PhraseList(generics.ListAPIView):
 
 
 class PhraseDetail(generics.RetrieveAPIView):
-    model = DCPhrase
+    queryset = DCPhrase.objects.all()
     serializer_class = DCPhraseSerializer
     renderer_classes = (JSONRenderer, PhraseDetailHTMLRenderer)

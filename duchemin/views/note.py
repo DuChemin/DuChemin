@@ -14,7 +14,6 @@ from duchemin.serializers.note import DCNoteSerializer
 
 
 class NoteList(generics.ListCreateAPIView):
-    model = DCNote
     serializer_class = DCNoteSerializer
     permission_classes = (permissions.IsAuthenticated,)
     renderer_classes = (JSONRenderer,)
@@ -49,7 +48,6 @@ class NoteList(generics.ListCreateAPIView):
 
 
 class NoteDetail(generics.RetrieveUpdateDestroyAPIView):
-    model = DCNote
     serializer_class = DCNoteSerializer
     permission_classes = (permissions.IsAuthenticated,)
     renderer_classes = (JSONRenderer,)
