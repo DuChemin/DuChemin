@@ -11,7 +11,17 @@
                 <li>
                     <label class="checkbox" for="form{{ forloop.counter }}">
                         <input type="checkbox" id="form{{ forloop.counter }}" name="lf" value="{{ repeat }}" />
-                {{ repeat }}
+                    {{ repeat }}
+                    </label>
+                </li>
+            {% endfor %}
+            </ul>
+            <ul class="unstyled">
+            {% for rpttype in repeat_exact_varied %}
+                <li>
+                    <label class="checkbox" for="exact{{ forloop.counter }}">
+                        <input type="checkbox" id="exact{{ forloop.counter }}" name="rev" value="{{ rpttype }}" />
+                    {{ rpttype }}
                     </label>
                 </li>
             {% endfor %}
