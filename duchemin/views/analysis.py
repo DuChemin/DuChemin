@@ -20,7 +20,7 @@ class AnalysisList(generics.ListAPIView):
     renderer_classes = (JSONRenderer, AnalysisListHTMLRenderer)
     paginate_by = 100
     paginate_by_param = 'page_size'
-    max_paginate_by = 200
+    max_paginate_by = 12000
 
 
 class AnalysisDetail(generics.RetrieveAPIView):
