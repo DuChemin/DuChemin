@@ -1,4 +1,5 @@
 import os
+from decouple import config
 
 # Should be not be True for production
 DEBUG = False
