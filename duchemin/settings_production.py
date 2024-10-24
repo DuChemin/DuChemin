@@ -2,7 +2,7 @@ import os
 from decouple import config
 
 # Should be not be True for production
-DEBUG = False
+DEBUG = config("DEBUG", default=False, cast=bool)
 TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = [
