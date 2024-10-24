@@ -95,8 +95,6 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '-bpbyo7m3d0rsvek5qrh2$3862(2#t4yoe3wc6341r)6z256i9'
 
 
 TEMPLATES = [

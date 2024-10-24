@@ -5,6 +5,8 @@ from decouple import config
 DEBUG = config("DEBUG", default=False, cast=bool)
 TEMPLATE_DEBUG = DEBUG
 
+SECRET_KEY = config("SECRET_KEY")
+
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'django',
