@@ -8,6 +8,8 @@ cd /app
 # Activate virtual environment (if you're using one)
 # source venv/bin/activate
 
+export PTYHONPATH="/app:$PTYHONPATH"
+
 # Load data into the database
 ./load_data.sh
 
