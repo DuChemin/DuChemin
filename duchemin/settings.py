@@ -2,9 +2,6 @@
 import os
 from .settings_production import *
 
-DEBUG = True  # Should be not be True for production
-TEMPLATE_DEBUG = DEBUG
-
 ALLOWED_HOSTS = [
     'django',
     'django_app',
