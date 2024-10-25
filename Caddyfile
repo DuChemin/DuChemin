@@ -1,0 +1,9 @@
+dev.digitalduchemin.org {
+    reverse_proxy / http://django_app:8000
+
+    handle_path /static/* {
+        root * /app/duchemin/static/
+        file_server
+    }
+}
+

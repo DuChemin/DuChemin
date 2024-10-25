@@ -1,0 +1,60 @@
+services:
+  caddy:
+    image: caddy:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./duchemin/static:/app/duchemin/static
+    depends_on:
+      - django_app
+    networks:
+      - duchemin_internal
+      - duchemin_external
+
+  db:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - duchemin_internal
+
+  solr:
+    build: ./solr
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./solr/duchemin-solr.war:/usr/local/tomcat/webapps/duchemin-solr.war
+    networks:
+      - duchemin_internal
+      - duchemin_external
+
+  django_app:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - solr
+      - db
+    volumes:
+      - ./duchemin/data:/app/duchemin/data
+      - ./duchemin/static:/app/duchemin/static
+    command: /app/entrypoint.sh
+    networks:
+      - duchemin_internal
+
+volumes:
+  static:
+  postgres_data:
+  duchemin-solr.war:
+  data:
+
+networks:
+  duchemin_internal:
+    internal: true
+  duchemin_external:

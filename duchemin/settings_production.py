@@ -13,6 +13,7 @@ ALLOWED_HOSTS = [
     'django_app',
     '.haverford.edu',
     '.digitalduchemin.org',
+    'dev.digitalduchemin.org',
 ]
 
 DATABASES = {

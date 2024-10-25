@@ -67,11 +67,13 @@ services:
   certbot:
     image: certbot/certbot
     container_name: certbot
-    volumes: 
+    volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
     command: certonly --webroot -w /var/www/certbot --force-renewal --email admin@digitalduchemin.org -d dev.digitalduchemin.org --agree-tos
-
+    networks:
+      - duchemin_external
+      - duchemin_internal
 volumes:
   static:
   postgres_data:
