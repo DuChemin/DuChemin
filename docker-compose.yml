@@ -6,6 +6,8 @@ services:
       - "443:443"
     volumes:
       - ./duchemin/static:/app/duchemin/static
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
       # - ./ca/http-server.pem:/etc/nginx/server.pem
       # - ./ca/http-server.key:/etc/nginx/server.key
       # - ./ca/py-server.pem:/etc/nginx/client.pem
@@ -61,6 +63,14 @@ services:
     command: /app/entrypoint.sh
     networks:
       - duchemin_internal
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes: 
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email admin@digitalduchemin.org -d dev.digitalduchemin.org --agree-tos
 
 volumes:
   static:
