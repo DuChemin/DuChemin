@@ -7,6 +7,7 @@ cd /app
 
 python manage.py makemigrations
 python manage.py migrate
+python manage.py collectstatic
 
 # Apply migrations and run the Django development server
 # python manage.py loaddata /app/duchemin/data/duchemin_dcperson.json
