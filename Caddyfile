@@ -1,9 +1,8 @@
-dev.digitalduchemin.org {
-    reverse_proxy / http://django_app:8000
-
+dev2.duchemin.mdap-testing.com {
     handle_path /static/* {
-        root * /app/duchemin/static/
+        root * /collected
         file_server
     }
-}
 
+    reverse_proxy /* http://django_app:8000
+}
