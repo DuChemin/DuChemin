@@ -8,6 +8,8 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '.localhost',
     '[::1]',
+    'dev.digitalduchemin.org',
+    'dev.duchemin.mdap-testing.com',
 ]
 
 PROJECT_DIR = os.path.dirname(__file__)
