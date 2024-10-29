@@ -17,12 +17,12 @@ class DCPerson(models.Model):
     alt_spelling = models.CharField(max_length=64, blank=True, null=True)
     remarks = models.TextField(blank=True, null=True)
 
-    def __unicode__(self):
-        return u"{0}, {1}".format(self.surname, self.given_name)
+    def __str__(self):
+        return f"{self.surname}, {self.given_name}"
 
     @property
     def full_name(self):
         if self.given_name:
-            return u"{0}, {1}".format(self.surname, self.given_name)
+            return str(self)
         else:
-            return u"{0}".format(self.surname)
+            return f"{self.surname}"

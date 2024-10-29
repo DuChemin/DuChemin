@@ -7,6 +7,8 @@ services:
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - static:/collected
+      - caddy_data:/data
+      - caddy_config:/config
     depends_on:
       - django_app
     networks:
@@ -53,6 +55,8 @@ volumes:
   postgres_data:
   duchemin-solr.war:
   data:
+  caddy_data:
+  caddy_config:
 
 networks:
   duchemin_internal:
