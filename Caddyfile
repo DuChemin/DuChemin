@@ -1,4 +1,4 @@
-dev3.duchemin.mdap-testing.com {
+dev.digitalduchemin.org {
     handle_path /static/* {
         root * /collected
         file_server

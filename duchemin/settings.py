@@ -1,16 +1,9 @@
 # Django settings for duchemin project.
 import os
 from .settings_production import *
+from decouple import Csv, config
 
-ALLOWED_HOSTS = [
-    'django',
-    'django_app',
-    '127.0.0.1',
-    '.localhost',
-    '[::1]',
-    'dev.digitalduchemin.org',
-    'dev3.duchemin.mdap-testing.com',
-]
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 
 PROJECT_DIR = os.path.dirname(__file__)
 
