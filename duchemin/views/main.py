@@ -237,7 +237,7 @@ def profile(request):
         'user': request.user,
         'profile': profile,
         'favourited_pieces': profile.favourited_piece.order_by('piece_id'),
-        'favourited_analyses': profile.favourited_analysis.order_by('piece_id'),
+        'favourited_analyses': profile.favourited_analysis.order_by('composition_number__piece_id'),
         'favourited_reconstructions': profile.favourited_reconstruction.order_by('piece'),
         'my_analyses': analyses,
         'my_reconstructions': reconstructions,
