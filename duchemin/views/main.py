@@ -5,7 +5,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
 from django.http import HttpResponseRedirect
-from django.template import RequestContext
 
 from duchemin.forms.analysis_form import AnalysisForm
 from duchemin.models.piece import DCPiece
@@ -245,7 +244,7 @@ def profile(request):
         'discussed_pieces': discussed_pieces,
         'pieces_with_notes': pieces_with_notes,
     }
-    return render(request, 'main/profile.html', data, context_instance=RequestContext(request))
+    return render(request, 'main/profile.html', data)
 
 
 def login(request):
