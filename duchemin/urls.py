@@ -49,7 +49,7 @@ if 'django.contrib.admin' in settings.INSTALLED_APPS:
         path('books/', books, name="dcbook-list"),
 
         
-        path('profile/', profile),
+        path('profile/', profile, name="profile"),
 
         path('reconstructions/', reconstructions),
         path('reconstruction/<int:reconstruction_id>/', reconstruction),
