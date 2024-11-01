@@ -45,12 +45,12 @@ def favourite_callback(request, ftype, fid):
 
     elif ftype == 'analysis':
         if action == 'remove':
-            an = DCAnalysis.objects.get(piece_id=fid)
+            an = DCAnalysis.objects.get(composition_number__piece_id=fid)
             user_profile.favourited_analysis.remove(an)
             success = True
         else:
             # favourite an analysis
-            an = DCAnalysis.objects.get(piece_id=fid)
+            an = DCAnalysis.objects.get(composition_number__piece_id=fid)
             user_profile.favourited_analysis.add(an)
             success = True
 
