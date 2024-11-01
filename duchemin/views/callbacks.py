@@ -29,7 +29,7 @@ def favourite_callback(request, ftype, fid):
     else:
         action = 'add'
 
-    user_profile = request.user.get_profile()
+    user_profile = request.user.profile
 
     success = False
     if ftype == 'piece':
