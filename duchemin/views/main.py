@@ -206,7 +206,7 @@ def reconstruction(request, recon_id):
 
 @login_required(login_url="/login/")
 def my_password_change(request):
-    return password_change(request, template_name='registration/password_change_form.html',
+    return render(request, template_name='registration/password_change_form.html',
         post_change_redirect="/profile/",)
 
 
