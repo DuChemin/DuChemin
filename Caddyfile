@@ -1,4 +1,4 @@
-dev.digitalduchemin.org {
+digitalduchemin.org {
     handle_path /static/* {
         root * /collected
         file_server
