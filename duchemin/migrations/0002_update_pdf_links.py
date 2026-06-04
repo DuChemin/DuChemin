@@ -7,7 +7,7 @@ from django.db.models import Value
 def update_pdf_links(apps, schema_editor):
     DCPiece = apps.get_model('duchemin', 'DCPiece')
     DCPiece.objects.filter(pdf_link__startswith='http://ricercar').update(
-        pdf_link=Replace(F('pdf_link'), Value('http://ricercar'), Value('ricercar-old'))
+        pdf_link=Replace(F('pdf_link'), Value('http://ricercar'), Value('http://ricercar-old'))
     )
 
 
